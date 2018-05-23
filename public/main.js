@@ -1,11 +1,10 @@
-var login = O('idlogin');
-var password = O('idpass');
 var websocket;
 var servidorWebserver;
-var meuID;
+var idlogin = O('idlogin');
+var idpass = O('idpass');
+var dadosUser;
 
 function startConection(id){
-    meuID = id;
     websocket = new ReconnectingWebSocket(servidorWebserver);
     websocket.onopen = function(evt){
         onOpen(evt)
@@ -21,30 +20,46 @@ function onOpen(evt){
     console.log('onOpen')
     let MSG = {
         tipo: 'LOGIN',
-        valor: meuID
+        valor: dadosUser
     };
-    websocket.send(JSON.stringify(MSG))
+    websocket.send(JSON.stringify(MSG));
 }
 function onClose(evt){
     console.log('onClose');
 }
 function onMessage(evt){
-    var msg = evt.data;
-    msg = JSON.parse(msg);
-    switch(msg.tipo){
-        case 'ERRO':
-            alert(msg.valor);
-                websocket.close(0);
+    var msgServer = JSON.parse(evt.data);
+
+    switch(msgServer.tipo){
+        case 'USERS'
+            listaAmigos(msgServer.valor);
             break;
     }
-    console.log('Recebeu msg');
+
 }
 servidorWebserver = 'ws://' + window.location.hostname + ':8080';
+
 
 function O(msg){
     return document.getElementById(msg);
 }
 function validaLogin(){
-    var dadosUser = {login:idlogin.value, pass:password.value};
-    console.log(dadosUser);
+    startConection(dadosUser);
+    dadosUser = {login:idlogin.value, pass:idpass.value};
+    
+}
+
+function listaAmigos(vetor){
+    var container = document.getElementById('users-container');
+    var aux = '';
+
+    for(var i = 0; i < vetor.length; i++){
+        if(!(vetor[i] === dadosUser.login)){
+            aux += vetor[i]+"<input type='submit' class='convidar' onclick='convite()' id='"+vetor[i]+"'>"
+        }
+    }
+    if (aux != logUsers){
+        container.innerHTML = aux;
+        logUsers = aux;
+    }
 }

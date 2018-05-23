@@ -9,15 +9,23 @@
 </head>
 <body>
     <h1>Jogo de xadrez</h1>
-    <form action="/login" method="POST">
-        User:<input type="text" placeholder="USUARIO"id="idlogin">
-        Pass:<input type="password" id="idpass">
+    <h1>LOGIN PAGE</h1>
+    
+        <input type="text" name="username" id="idlogin">
+        <input type="password" name="password"id="idpass">
+        <input type="submit" value="Login" onclick="validaLogin()">
+   
 
-        <input type="submit" value="LOGAR" onclick="validaLogin()">
-    </form>
+        <input type="text" name="username" id="cadastroLogin">
+        <input type="password" name="password"id="cadastroPass">
+        <input type="submit" value="Cadastrar">
+
+        <div id="users-container"></div>
+   
 </body>
 
 
+<script type="text/javascript" src="/reconnecting-websocket.js"></script>
 <script type="text/javascript" src="/main.js"></script>
 
 </html>
