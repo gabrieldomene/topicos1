@@ -15,6 +15,7 @@ var urldb = 'mongodb://localhost:27017/';
 var app = express();
 
 var vetorClientes = [];
+const TIMEOUT = 10000;
 
 const wss = new WebSocket.Server({ port: 8080 },function (){
     console.log('SERVIDOR WEBSOCKETS na porta 8080');
@@ -34,8 +35,30 @@ function fazBroadcast (msg)
               }
             }
 }
+
+function PERIODICA ()
+{
+  let agora = Date.now();
+
+  let x=0;
+  while (x < vetorClientes.length)
+  {
+    if ((vetorClientes[x].validado==false) && ((agora - vetorClientes[x].timestamp) > TIMEOUT ) )
+    {
+        console.log('remove usuario da lista de ativos')
+        let MSG = {tipo:'ERRO',valor:'timeout'};
+        vetorClientes[x].send(JSON.stringify(MSG));
+        vetorClientes[x].close();
+        vetorClientes.splice(x, 1);
+        atualizaUsers();
+    }
+    else x++;
+
+  }
+}
+
 //ATUALIZA lista
-function atualizaLista(){
+function atualizaUsers(){
     var temp = [];
 
     for(var i=0; i < vetorClientes.length;i++){
@@ -70,7 +93,7 @@ wss.on('connection', function connection(ws){
             ws.nome = MSG.valor.login;
             ws.validado = true;
             fazBroadcast(MSG);
-            atualizaLista();
+            atualizaUsers();
         }
     });
 });
@@ -120,3 +143,4 @@ app.post('/cadastrar', urlencodedParser, function(req, res){//recebe o body da r
 app.listen(3000, function(){
     console.log('Server running on 3000');
 });
+setInterval (PERIODICA,10000);
