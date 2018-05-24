@@ -2,3 +2,7 @@ body{
     margin: 0 auto;
     background: #c0c0c0;
 }
+
+#ingame{
+    visibility: hidden;
+}

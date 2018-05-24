@@ -3,10 +3,17 @@ var servidorWebserver;
 var idlogin = O('idlogin');
 var idpass = O('idpass');
 var dadosUser;
+var toggle = O('ingame');
+var btnLogin = O('btnLogin');
+
+btnLogin.addEventListener('click', function(){
+    validaLogin();
+});
 
 function startConection(id){
+    dadosUser = id;
     websocket = new ReconnectingWebSocket(servidorWebserver);
-    websocket.onopen = function(evt){
+    websocket.onopen = function(evt){   
         onOpen(evt)
     }
     websocket.onclose = function(evt){
@@ -31,8 +38,9 @@ function onMessage(evt){
     var msgServer = JSON.parse(evt.data);
 
     switch(msgServer.tipo){
-        case 'USERS'
-            listaAmigos(msgServer.valor);
+        case 'USERS':
+            listaAmigos(msgServer.valor); //mostra os usuarios no vetor conectados
+            /* alert(msgServer.valor);*/
             break;
     }
 
@@ -44,11 +52,15 @@ function O(msg){
     return document.getElementById(msg);
 }
 function validaLogin(){
-    startConection(dadosUser);
-    dadosUser = {login:idlogin.value, pass:idpass.value};
-    
-}
 
+    let dadosUser = {login:idlogin.value, pass:idpass.value};
+    startConection(dadosUser);
+    dadosUser = JSON.stringify(dadosUser);
+    toggle.style.visibility = 'visible';
+    
+}   
+
+var logUsers;
 function listaAmigos(vetor){
     var container = document.getElementById('users-container');
     var aux = '';
