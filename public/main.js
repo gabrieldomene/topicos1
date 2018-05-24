@@ -67,7 +67,7 @@ function listaAmigos(vetor){
 
     for(var i = 0; i < vetor.length; i++){
         if(!(vetor[i] === dadosUser.login)){
-            aux += vetor[i]+"<input type='submit' class='convidar' onclick='convite()' id='"+vetor[i]+"'>"
+            aux += vetor[i]+"<input type='submit' value='Convite' class='convidar' onclick='convite()' id='"+vetor[i]+"'>"
         }
     }
     if (aux != logUsers){
