@@ -1,6 +1,6 @@
 body{
     margin: 0 auto;
-    background: #c0c0c0;
+    background: #blue;
 }
 
 #ingame{
@@ -38,3 +38,4 @@ p{
     transition: 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
     border-radius: 10%;
 }
+
