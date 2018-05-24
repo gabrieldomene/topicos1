@@ -35,6 +35,26 @@ function fazBroadcast (msg)
               }
             }
 }
+function criaTabuleiro(){
+    let board = new Array(8);
+    for(var i = 0; i < 8; i++) {
+        board[i] = new Array(8);
+    }
+    for(let i = 0; i<8; i++){
+        for(let j = 0; j<8; j++){
+            if(i<2){
+                board[i][j] = 1; //seta player de cima;
+            }
+            else if(i>=2 && i<6){
+                board[i][j] = 0; //parte livre
+            }else{
+                board[i][j] = 2; //player 2
+            }
+        }
+    }
+    return board
+}
+board = criaTabuleiro();
 
 function PERIODICA ()
 {
@@ -104,7 +124,7 @@ app.use(express.static(__dirname + '/public'));
 app.post('/login', urlencodedParser, function(req, res){
     // username = req.body.username;
     // password = req.body.password;
-    // usercorreto = 'luanrodrigues'
+    // usercorreto = 'luanbrodrigues'
     // //perguntar pro fábio da conexao por req
     // //tentar jogar no localstorage e verificar
     // if(username == usercorreto){
@@ -144,3 +164,5 @@ app.listen(3000, function(){
     console.log('Server running on 3000');
 });
 setInterval (PERIODICA,10000);
+console.log(board)
+
