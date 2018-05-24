@@ -5,6 +5,7 @@ var idpass = O('idpass');
 var dadosUser;
 var toggle = O('ingame');
 var btnLogin = O('btnLogin');
+var peca = O('peca')
 
 btnLogin.addEventListener('click', function(){
     validaLogin();
@@ -75,3 +76,89 @@ function listaAmigos(vetor){
         logUsers = aux;
     }
 }
+
+let DESLOCAMENTO=50;
+let x=DESLOCAMENTO;
+function desenhaTabuleiro (ctx)
+{
+  let cor = "#f3f3f3";
+  let T = 100;
+  for (let linhas=0; linhas<8;linhas++)
+  {
+      if (cor=="#f3f3f3") cor = "#44423f";
+       else cor = "#f3f3f3"
+    for (let colunas=0; colunas <8; colunas++)
+    {  
+        /* ctx.globalCompositeOperation = 'source-over';  *///joga imagem na frente
+        ctx.fillStyle=cor; //setando cor do quadrado
+        ctx.fillRect(colunas*T+DESLOCAMENTO,linhas*T+DESLOCAMENTO,T,T); //(posx, posy, L, L)
+       if (cor=="#f3f3f3") cor = "#44423f";
+       else cor = "#f3f3f3"
+    }
+  }
+  let tabuleiro = new Array(8)
+}
+window.onload = function() {
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    var img = document.getElementById("peca");
+    let st="ABCDEFGH";
+    let st2="12345678"
+     ctx.font = "15px Helvetica";
+     for (let colunas=0;colunas<8;colunas++)
+      ctx.fillText(st.charAt(colunas),colunas*100+2*DESLOCAMENTO,50); //charat pega a primeira letra de st
+    for (let linhas=0;linhas<8;linhas++)
+      ctx.fillText(st2.charAt(linhas),20,linhas*100+2*DESLOCAMENTO); 
+    setInterval(function(){
+        desenhaTabuleiro(ctx);
+        //ctx.clearRect(0,0,999,999);
+       /*  ctx.drawImage(img, x, 50); *///desenha imagem no tabuleiro
+        x=(x+100) % 800;
+    },2000);
+    
+};
+
+function desenhaPeca(ctx, value, x, y){
+    ctx.globalCompositeOperation = 'source-over';
+    if(value != 0){
+        ctx.fillText('A', T, T);
+    }
+}
+
+function pintaTabuleiro(ctx) { //falta receber o tabuleiro NO MSG EVENT
+  
+    ctx.globalCompositeOperation ='source-over';
+  
+    for(var i = 0; i < 8; i++) {
+          for(var j = 0; j < 8; j++) {
+              desenhapeca(ctx, board[i][j], j, i);
+          }
+    }
+  
+    ctx.globalCompositeOperation ='destination-over';
+  }
+
+/* function pintaTabuleiro(ctx) {
+  
+    ctx.globalCompositeOperation ='source-over';
+  
+    for(var i = 0; i < 8; i++) {
+          for(var j = 0; j < 8; j++) {
+              desenhapeca(ctx, board[i][j], j, i);
+          }
+    }
+  
+    ctx.globalCompositeOperation ='destination-over';
+}
+
+pintaTabuleiro(ctx)
+
+function desenhapeca(ctx, cod, x, y) {
+    // onde na matriz estiver undefined, é que o espaço é vazio
+    if(cod != 0) { // vazio significa undefined
+      ctx.fillRect(img, T, T);
+      
+      //console.log("Desenhando em "+(-10 + x)+" "+(800/8 + y*800/8)+" o valor "+ cod);
+    }
+}
+   */

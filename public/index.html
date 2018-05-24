@@ -35,49 +35,12 @@
 <script type="text/javascript" src="/main.js"></script>
 
 
-<img id="scream" style="display: none;" width="220" height="277"
-src="peca.png" alt="The Scream">
+<img id="peca" style="display: none;" width="220" height="277"
+src="peca.png" alt="The peca">
 
 <script>
  
-  let DESLOCAMENTO=50;
- let x=DESLOCAMENTO;
-function desenhaTabuleiro (ctx)
-{
-  let cor = "blue;"
-  let T=100;
-  for (let linhas=0; linhas<8;linhas++)
-  {
-      if (cor=="#f3f3f3") cor = "#44423f";
-       else cor = "#f3f3f3"
-    for (let colunas=0; colunas <8; colunas++)
-    {
-       ctx.fillStyle=cor;
-       ctx.fillRect(colunas*T+DESLOCAMENTO,linhas*T+DESLOCAMENTO,T,T);
-       if (cor=="#f3f3f3") cor = "#44423f";
-       else cor = "#f3f3f3"
-    }
-  }
-}
-window.onload = function() {
-    var canvas = document.getElementById("myCanvas");
-    var ctx = canvas.getContext("2d");
-    var img = document.getElementById("scream");
-    let st="ABCDEFGH";
-    let st2="12345678"
-     ctx.font = "15px Helvetica";
-     for (let colunas=0;colunas<8;colunas++)
-      ctx.fillText(st.charAt(colunas),colunas*100+2*DESLOCAMENTO,50); //charat pega a primeira letra de st
-    for (let linhas=0;linhas<8;linhas++)
-      ctx.fillText(st2.charAt(linhas),20,linhas*100+2*DESLOCAMENTO); 
-    setInterval(function(){
-        desenhaTabuleiro(ctx);
-        //ctx.clearRect(0,0,999,999);
-        ctx.drawImage(img, x, 50);//desenha imagem no tabuleiro
-        x=(x+100) % 800;
-    },2000);
-    
-};
+
 </script>
 
 </body>
