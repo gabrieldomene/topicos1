@@ -1,6 +1,6 @@
 body{
     margin: 0 auto;
-    background: #c0c0c0;
+    background: #blue;
 }
 
 #ingame{
@@ -25,7 +25,7 @@ p{
 .convidar{
     padding: 5px 15px;
     height: 35px;
-    width: 75px;
+    width: 50%;
     border: none;
     background: #f3a131;
     border-radius: 10%;
@@ -39,3 +39,9 @@ p{
     border-radius: 10%;
 }
 
+  .dragme{
+            position:relative;
+            width: 270px;
+            height: 203px;
+            cursor: move;
+        }
