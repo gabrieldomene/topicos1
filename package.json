@@ -1,0 +1,19 @@
+{
+  "name": "chess-game",
+  "version": "1.0.0",
+  "description": "Trabson 1 de topicos 1",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrieldomene/topicos1.git"
+  },
+  "author": "Gabriel e Hamilton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gabrieldomene/topicos1/issues"
+  },
+  "homepage": "https://github.com/gabrieldomene/topicos1#readme"
+}
