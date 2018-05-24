@@ -39,10 +39,13 @@ function atualizaLista(){
     var temp = [];
 
     for(var i=0; i < vetorClientes.length;i++){
-        temp[i].push(vetorClientes[i].nome);
+        if(vetorClientes[i].validado = true){
+            temp.push(vetorClientes[i].nome);
+        }
     }
 
     let MSG = {tipo:'USERS', valor:temp}
+    console.log('Usuarios no vetor ws.nome: ' + temp);
 
     fazBroadcast(MSG);
 
@@ -64,11 +67,11 @@ wss.on('connection', function connection(ws){
         if(MSG.tipo == 'LOGIN'){
             console.log('Login: ');
             console.log('ID= ' + MSG.valor.login + ' PASS= ' + MSG.valor.pass);
-            ws.nome = MSG.valor.username;
+            ws.nome = MSG.valor.login;
             ws.validado = true;
+            fazBroadcast(MSG);
+            atualizaLista();
         }
-    
-        
     });
 });
 
