@@ -76,12 +76,12 @@ window.onload = function() {
         x=(x+100) % 800;
     },2000);
     
-    document.onmousedown = startDrag;
-    document.onmouseup = stopDrag;
-
 };
 
 function startDrag(e) {
+  if (!e) {
+    var e = window.event;
+  }
   if(e.preventDefault) e.preventDefault();
 
   var targ = e.target ? e.target : e.srcElement;
@@ -105,6 +105,7 @@ function startDrag(e) {
 
 function dragDiv(e) {
   if (!drag) {return};
+  if (!e) { var e= window.event};
   var targ=e.target?e.target:e.srcElement;
    
   targ.style.left=coordX+e.clientX-offsetX+'px';
@@ -114,6 +115,11 @@ function dragDiv(e) {
 
 function stopDrag() {
   drag=false;
+}
+
+window.onload = function() {
+  document.onmousedown = startDrag;
+  document.onmouseup = stopDrag;
 }
 
 </script>
