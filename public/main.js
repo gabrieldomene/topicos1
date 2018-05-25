@@ -5,7 +5,8 @@ var idpass = O('idpass');
 var dadosUser;
 var toggle = O('ingame');
 var btnLogin = O('btnLogin');
-var peca = O('peca')
+var peca = O('peca');
+var board = boardClient();
 
 btnLogin.addEventListener('click', function(){
     validaLogin();
@@ -68,7 +69,7 @@ function listaAmigos(vetor){
 
     for(var i = 0; i < vetor.length; i++){
         if(!(vetor[i] === dadosUser.login)){
-            aux += vetor[i]+"<input type='submit' value='Convite' class='convidar' onclick='convite()' id='"+vetor[i]+"'>"
+            aux += vetor[i]+"<input type='submit' value='Convite' class='convidar' onclick='conviteAmigo(this.id)' id='"+vetor[i]+"'>"
         }
     }
     if (aux != logUsers){
@@ -109,56 +110,51 @@ window.onload = function() {
       ctx.fillText(st.charAt(colunas),colunas*100+2*DESLOCAMENTO,50); //charat pega a primeira letra de st
     for (let linhas=0;linhas<8;linhas++)
       ctx.fillText(st2.charAt(linhas),20,linhas*100+2*DESLOCAMENTO); 
-    setInterval(function(){
-        desenhaTabuleiro(ctx);
-        //ctx.clearRect(0,0,999,999);
-       /*  ctx.drawImage(img, x, 50); *///desenha imagem no tabuleiro
-        x=(x+100) % 800;
+      desenhaTabuleiro(ctx);
+      for(let i =0; i<8; i++){
+          for(let j = 0; j<8; j++){
+              if((board[i][j] == 1) || (board[i][j] == 2)){
+                ctx.drawImage(img, x+(i*100), j*100+50);
+              }
+          }
+      }setInterval(function(){
+
     },2000);
     
 };
 
-function desenhaPeca(ctx, value, x, y){
-    ctx.globalCompositeOperation = 'source-over';
-    if(value != 0){
-        ctx.fillText('A', T, T);
+function boardClient(){
+    let board = new Array(8);
+    for(var i = 0; i < 8; i++) {
+        board[i] = new Array(8);
     }
+    for(let i = 0; i<8; i++){
+        for(let j = 0; j<8; j++){
+            if(i<2){
+                board[i][j] = 1; //seta player de cima;
+            }
+            else if(i>=2 && i<6){
+                board[i][j] = 0; //parte livre
+            }else{
+                board[i][j] = 2; //player 2
+            }
+        }
+    }
+    return board
 }
 
-function pintaTabuleiro(ctx) { //falta receber o tabuleiro NO MSG EVENT
-  
-    ctx.globalCompositeOperation ='source-over';
-  
-    for(var i = 0; i < 8; i++) {
-          for(var j = 0; j < 8; j++) {
-              desenhapeca(ctx, board[i][j], j, i);
+console.log(board)
+function atualizaTabuleiro(ctx, value, x, y){
+    desenhaTabuleiro(ctx); //desenha o xadraz
+      for(let i =0; i<8; i++){
+          for(let j = 0; j<8; j++){
+              if((board[i][j] == 1) || (board[i][j] == 2)){ // só desenha onde tiver a marcação 1/2
+                ctx.drawImage(img, x+(i*100), j*100+50);
+              }
           }
     }
-  
-    ctx.globalCompositeOperation ='destination-over';
-  }
-
-/* function pintaTabuleiro(ctx) {
-  
-    ctx.globalCompositeOperation ='source-over';
-  
-    for(var i = 0; i < 8; i++) {
-          for(var j = 0; j < 8; j++) {
-              desenhapeca(ctx, board[i][j], j, i);
-          }
-    }
-  
-    ctx.globalCompositeOperation ='destination-over';
 }
 
-pintaTabuleiro(ctx)
-
-function desenhapeca(ctx, cod, x, y) {
-    // onde na matriz estiver undefined, é que o espaço é vazio
-    if(cod != 0) { // vazio significa undefined
-      ctx.fillRect(img, T, T);
-      
-      //console.log("Desenhando em "+(-10 + x)+" "+(800/8 + y*800/8)+" o valor "+ cod);
-    }
+function conviteAmigo(lul){
+    alert(O(lul).id)//aqui ta passando o nick do player
 }
-   */
