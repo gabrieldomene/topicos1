@@ -114,6 +114,10 @@ wss.on('connection', function connection(ws){
             ws.validado = true;
             fazBroadcast(MSG);
             atualizaUsers();
+        }else if(MSG.tipo =='ATUALIZA'){
+            console.log("recebeu jogada de alguem")
+            console.log(MSG.coord)
+            fazBroadcast(MSG);
         }
     });
 });
