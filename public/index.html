@@ -20,6 +20,13 @@
         <input type="password" name="password"id="cadastroPass">
         <input type="submit" value="Cadastrar">
     </div>
+    <input type="submit" value="ATUALIZAR" id="atualizagame">
+    Last Position
+    Pos I<input type="number" min="0" max="8" id="posi">
+    Pos J<input type="number" min="0" max="8" id="posj">
+    New position
+    Pos I<input type="number" min="0" max="8" id="nposi">
+    Pos J<input type="number" min="0" max="8" id="nposj">
     <div id="ingame"><p>Lista de usuários</p>
         <div id="users-container"></div>
         <canvas id="myCanvas" width="1000" height="1000"
@@ -28,18 +35,16 @@
         </canvas>
         
     </div>
+    <img id="peca" style="display: none;" width="220" height="277"
+src="peca.png" alt="The peca">
 </body>
 
 
 <script type="text/javascript" src="/reconnecting-websocket.js"></script>
 <script type="text/javascript" src="/main.js"></script>
 
-<img id="scream" src="peca.png" alt="drag-and-drop image script The peca" title="drag-and-drop image script" class="dragme">
-<script>
- 
-
-</script>
-
-</body>
+<!-- <img id="scream" src="peca.png" alt="drag-and-drop image script The peca" title="drag-and-drop image script" class="dragme">
+<img id="scream" src="peca.png" alt="drag-and-drop image script" title="drag-and-drop image script" class="dragme">
+ -->
 
 </html>

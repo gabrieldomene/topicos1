@@ -8,6 +8,10 @@ var btnLogin = O('btnLogin');
 var peca = O('peca');
 var board = boardClient();
 
+var canvas = document.getElementById("myCanvas");
+var ctx = canvas.getContext("2d");
+var img = O("peca");
+
 btnLogin.addEventListener('click', function(){
     validaLogin();
 });
@@ -44,6 +48,14 @@ function onMessage(evt){
             listaAmigos(msgServer.valor); //mostra os usuarios no vetor conectados
             /* alert(msgServer.valor);*/
             break;
+        case 'ATUALIZA':
+            let posi = msgServer.coord.i1;
+            let posj = msgServer.coord.j1;
+            let nposi = msgServer.coord.i2;
+            let nposj = msgServer.coord.j2;
+            limpaTabuleiro(ctx, board, posi, posj);
+            atualizaTabuleiro(ctx, board, nposi, nposj);
+
     }
 
 }
@@ -105,11 +117,13 @@ window.onload = function() {
     var img = document.getElementById("peca");
     let st="ABCDEFGH";
     let st2="12345678"
-     ctx.font = "15px Helvetica";
-     for (let colunas=0;colunas<8;colunas++)
-      ctx.fillText(st.charAt(colunas),colunas*100+2*DESLOCAMENTO,50); //charat pega a primeira letra de st
+    ctx.font = "15px Helvetica";
+    for (let colunas=0;colunas<8;colunas++)
+    ctx.fillText(st.charAt(colunas),colunas*100+2*DESLOCAMENTO,50); //charat pega a primeira letra de st
     for (let linhas=0;linhas<8;linhas++)
-      ctx.fillText(st2.charAt(linhas),20,linhas*100+2*DESLOCAMENTO); 
+    ctx.fillText(st2.charAt(linhas),20,linhas*100+2*DESLOCAMENTO);
+    /*   ctx.onmousedown = startDrag;
+    ctx.onmouseup = stopDrag; */
       desenhaTabuleiro(ctx);
       for(let i =0; i<8; i++){
           for(let j = 0; j<8; j++){
@@ -117,11 +131,7 @@ window.onload = function() {
                 ctx.drawImage(img, x+(i*100), j*100+50);
               }
           }
-      }setInterval(function(){
-
-    document.onmousedown = startDrag;
-    document.onmouseup = stopDrag;
-          
+      }setInterval(function(){     
     },2000);
     
 };
@@ -147,8 +157,22 @@ function boardClient(){
 }
 
 console.log(board)
-function atualizaTabuleiro(ctx, value, x, y){
-    desenhaTabuleiro(ctx); //desenha o xadraz
+function atualizaTabuleiro(ctx, value, i, j){
+    desenhaTabuleiro(ctx); //desenha o xadrez
+    board[i][j] = 1;
+    console.log(board)
+      for(let i =0; i<8; i++){
+          for(let j = 0; j<8; j++){
+              if((board[i][j] == 1) || (board[i][j] == 2)){ // só desenha onde tiver a marcação 1/2
+                ctx.drawImage(img, x+(i*100), j*100+50);
+              }
+          }
+    }
+}
+function limpaTabuleiro(ctx, value, i, j){
+    desenhaTabuleiro(ctx); //desenha o xadrez
+    board[i][j] = 0;
+    console.log(board)
       for(let i =0; i<8; i++){
           for(let j = 0; j<8; j++){
               if((board[i][j] == 1) || (board[i][j] == 2)){ // só desenha onde tiver a marcação 1/2
@@ -158,41 +182,22 @@ function atualizaTabuleiro(ctx, value, x, y){
     }
 }
 
-function conviteAmigo(lul){
-    alert(O(lul).id)//aqui ta passando o nick do player
+function conviteAmigo(nome){
+    alert(O(nome).id)//aqui ta passando o nick do player
 }
+O('atualizagame').addEventListener("click", function(){
+    let posi = O('posi').value;
+    let posj = O('posj').value;
+    let nposi = O('nposi').value;
+    let nposj = O('nposj').value;
+    var ctx = canvas.getContext("2d");
+    limpaTabuleiro(ctx, board, posi, posj);
+    atualizaTabuleiro(ctx, board, nposi, nposj);
+    let MSG = {
+        tipo: "ATUALIZA",
+        valor: board,
+        coord: {i1:posi, j1:posj, i2:nposi, j2:nposj}
+    }
+    websocket.send(JSON.stringify(MSG));
+})
 
-function startDrag(e) {
-  if(e.preventDefault) e.preventDefault();
-
-  var targ = e.target ? e.target : e.srcElement;
-
-  if (targ.className != 'dragme') {return};
-
-  offsetX = e.clientX;
-  offsetY = e.clientY;
-
-  if(!targ.style.left) { targ.style.left='0px'};
-  if (!targ.style.top) { targ.style.top='0px'};
-
-  coordX = parseInt(targ.style.left);
-  coordY = parseInt(targ.style.top);
-  drag = true;
-
-  document.onmousemove=dragDiv;
-    return false;
-        
- }
-
-function dragDiv(e) {
-  if (!drag) {return};
-  var targ=e.target?e.target:e.srcElement;
-   
-  targ.style.left=coordX+e.clientX-offsetX+'px';
-  targ.style.top=coordY+e.clientY-offsetY+'px';
-  return false;
-}
-
-function stopDrag() {
-  drag=false;
-}

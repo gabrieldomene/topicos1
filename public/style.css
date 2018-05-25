@@ -38,4 +38,9 @@ p{
     transition: 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
     border-radius: 10%;
 }
-
+.dragme{
+    position:relative;
+    width: 270px;
+    height: 203px;
+    cursor: move;
+}
