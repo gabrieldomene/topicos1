@@ -7,13 +7,14 @@
     <link rel="stylesheet" href="/style.css">
     <title>Jogo de xadrez</title>
 </head>
-<body ondragover="allowDrop(event)">
+<body>
     <h1>Jogo de xadrez</h1>
     <h1>LOGIN PAGE</h1>
     <div class="infologin">
         <input type="text" name="username" id="idlogin">
         <input type="password" name="password"id="idpass">
         <button type="button" value="Login" id="btnLogin">LOGIN</button>
+   
 
         <input type="text" name="username" id="cadastroLogin">
         <input type="password" name="password"id="cadastroPass">
@@ -27,94 +28,18 @@
         </canvas>
         
     </div>
-
-
-    
 </body>
+
 
 <script type="text/javascript" src="/reconnecting-websocket.js"></script>
 <script type="text/javascript" src="/main.js"></script>
 
-<img id="scream" src="peca2.png" alt="drag-and-drop image script" title="drag-and-drop image script" class="dragme">
+
+<img id="peca" style="display: none;" width="220" height="277"
+src="peca.png" alt="The peca">
 
 <script>
-
-  let DESLOCAMENTO=50;
- let x=DESLOCAMENTO;
-function desenhaTabuleiro (ctx)
-{
-  let cor = "blue;"
-  let T=100;
-  for (let linhas=0; linhas<8;linhas++)
-  {
-      if (cor=="#f3f3f3") cor = "#44423f";
-       else cor = "#f3f3f3"
-    for (let colunas=0; colunas <8; colunas++)
-    {
-       ctx.fillStyle=cor;
-       ctx.fillRect(colunas*T+DESLOCAMENTO,linhas*T+DESLOCAMENTO,T,T);
-       if (cor=="#f3f3f3") cor = "#44423f";
-       else cor = "#f3f3f3"
-    }
-  }
-}
-window.onload = function() {
-    var canvas = document.getElementById("myCanvas");
-    var ctx = canvas.getContext("2d");
-    var img = document.getElementById("scream");
-    let st="ABCDEFGH";
-    let st2="12345678"
-     ctx.font = "15px Helvetica";
-     for (let colunas=0;colunas<8;colunas++)
-      ctx.fillText(st.charAt(colunas),colunas*100+2*DESLOCAMENTO,50); //charat pega a primeira letra de st
-    for (let linhas=0;linhas<8;linhas++)
-      ctx.fillText(st2.charAt(linhas),20,linhas*100+2*DESLOCAMENTO); 
-    setInterval(function(){
-        desenhaTabuleiro(ctx);
-        //ctx.clearRect(0,0,999,999);
-        ctx.drawImage(img, x, 50);//desenha imagem no tabuleiro
-        x=(x+100) % 800;
-    },2000);
-    
-    document.onmousedown = startDrag;
-    document.onmouseup = stopDrag;
-
-};
-
-function startDrag(e) {
-  if(e.preventDefault) e.preventDefault();
-
-  var targ = e.target ? e.target : e.srcElement;
-
-  if (targ.className != 'dragme') {return};
-
-  offsetX = e.clientX;
-  offsetY = e.clientY;
-
-  if(!targ.style.left) { targ.style.left='0px'};
-  if (!targ.style.top) { targ.style.top='0px'};
-
-  coordX = parseInt(targ.style.left);
-  coordY = parseInt(targ.style.top);
-  drag = true;
-
-  document.onmousemove=dragDiv;
-    return false;
-        
- }
-
-function dragDiv(e) {
-  if (!drag) {return};
-  var targ=e.target?e.target:e.srcElement;
-   
-  targ.style.left=coordX+e.clientX-offsetX+'px';
-  targ.style.top=coordY+e.clientY-offsetY+'px';
-  return false;
-}
-
-function stopDrag() {
-  drag=false;
-}
+ 
 
 </script>
 
