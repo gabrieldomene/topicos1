@@ -119,6 +119,9 @@ window.onload = function() {
           }
       }setInterval(function(){
 
+    document.onmousedown = startDrag;
+    document.onmouseup = stopDrag;
+          
     },2000);
     
 };
@@ -157,4 +160,39 @@ function atualizaTabuleiro(ctx, value, x, y){
 
 function conviteAmigo(lul){
     alert(O(lul).id)//aqui ta passando o nick do player
+}
+
+function startDrag(e) {
+  if(e.preventDefault) e.preventDefault();
+
+  var targ = e.target ? e.target : e.srcElement;
+
+  if (targ.className != 'dragme') {return};
+
+  offsetX = e.clientX;
+  offsetY = e.clientY;
+
+  if(!targ.style.left) { targ.style.left='0px'};
+  if (!targ.style.top) { targ.style.top='0px'};
+
+  coordX = parseInt(targ.style.left);
+  coordY = parseInt(targ.style.top);
+  drag = true;
+
+  document.onmousemove=dragDiv;
+    return false;
+        
+ }
+
+function dragDiv(e) {
+  if (!drag) {return};
+  var targ=e.target?e.target:e.srcElement;
+   
+  targ.style.left=coordX+e.clientX-offsetX+'px';
+  targ.style.top=coordY+e.clientY-offsetY+'px';
+  return false;
+}
+
+function stopDrag() {
+  drag=false;
 }
