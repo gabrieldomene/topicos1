@@ -89,7 +89,7 @@ function atualizaUsers(){
 
     let MSG = {tipo:'USERS', valor:temp}
     console.log('Usuarios no vetor ws.nome: ' + temp);
-
+    
     fazBroadcast(MSG);
 
 }
@@ -117,6 +117,8 @@ wss.on('connection', function connection(ws){
         }
     });
 });
+
+
 
 
 app.use(express.static(__dirname + '/public'));
@@ -164,5 +166,4 @@ app.listen(3000, function(){
     console.log('Server running on 3000');
 });
 setInterval (PERIODICA,10000);
-console.log(board)
 
