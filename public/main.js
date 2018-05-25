@@ -53,8 +53,9 @@ function onMessage(evt){
             let posj = msgServer.coord.j1;
             let nposi = msgServer.coord.i2;
             let nposj = msgServer.coord.j2;
+            let valor = msgServer.valorplayer;
             limpaTabuleiro(ctx, board, posi, posj);
-            atualizaTabuleiro(ctx, board, nposi, nposj);
+            atualizaTabuleiro(ctx, board, nposi, nposj, valor);
 
     }
 
@@ -156,11 +157,13 @@ function boardClient(){
     return board
 }
 
-console.log(board)
-function atualizaTabuleiro(ctx, value, i, j){
-    desenhaTabuleiro(ctx); //desenha o xadrez
-    board[i][j] = 1;
-    console.log(board)
+
+function atualizaTabuleiro(ctx, value, i, j, valor){
+    /* let auxi = i;
+    let auxj = j; */
+    /* /* desenhaTabuleiro(ctx); //desenha o xadrez */
+    /* console.log(board) */
+    board[i][j] = valor;
       for(let i =0; i<8; i++){
           for(let j = 0; j<8; j++){
               if((board[i][j] == 1) || (board[i][j] == 2)){ // só desenha onde tiver a marcação 1/2
@@ -170,10 +173,11 @@ function atualizaTabuleiro(ctx, value, i, j){
     }
 }
 function limpaTabuleiro(ctx, value, i, j){
-    desenhaTabuleiro(ctx); //desenha o xadrez
+    
     board[i][j] = 0;
-    console.log(board)
-      for(let i =0; i<8; i++){
+    /* console.log(board) */
+    desenhaTabuleiro(ctx); //desenha o xadrez */
+       for(let i =0; i<8; i++){
           for(let j = 0; j<8; j++){
               if((board[i][j] == 1) || (board[i][j] == 2)){ // só desenha onde tiver a marcação 1/2
                 ctx.drawImage(img, x+(i*100), j*100+50);
@@ -186,18 +190,19 @@ function conviteAmigo(nome){
     alert(O(nome).id)//aqui ta passando o nick do player
 }
 O('atualizagame').addEventListener("click", function(){
-    let posi = O('posi').value;
-    let posj = O('posj').value;
-    let nposi = O('nposi').value;
-    let nposj = O('nposj').value;
-    var ctx = canvas.getContext("2d");
-    limpaTabuleiro(ctx, board, posi, posj);
-    atualizaTabuleiro(ctx, board, nposi, nposj);
+    let posi = O('posi').value;//antigo I
+    let posj = O('posj').value;//antigo J
+    let nposi = O('nposi').value;//novo I
+    let nposj = O('nposj').value;//novo J
+    let jogador = board[posi][posj];
+    console.log(board);
     let MSG = {
         tipo: "ATUALIZA",
         valor: board,
-        coord: {i1:posi, j1:posj, i2:nposi, j2:nposj}
+        coord: {i1:posi, j1:posj, i2:nposi, j2:nposj},
+        valorplayer: jogador
     }
+    
     websocket.send(JSON.stringify(MSG));
 })
 
