@@ -116,7 +116,14 @@ wss.on('connection', function connection(ws){
             atualizaUsers();
         }else if(MSG.tipo =='ATUALIZA'){
             console.log("recebeu jogada de alguem")
-            console.log(MSG.coord)
+            console.log(MSG.coord);
+            console.log(MSG.valorplayer);
+           /*  let boardServer = MSG.valor;
+            let oldi = MSG.coord.i1;
+            let oldj = MSG.coord.j1;
+            let newi = MSG.coord.i2;
+            let newj = MSG.coord.j2; */
+            
             fazBroadcast(MSG);
         }
     });
